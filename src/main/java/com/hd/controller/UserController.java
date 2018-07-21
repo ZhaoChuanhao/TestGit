@@ -22,9 +22,7 @@ public class UserController {
     public String test(Model model){
         List<User> users = userService.getAllUser();
         for (User u:users) {
-            System.out.println("==========");
             System.out.println(u.getName());
-            System.out.println("==========");
         }
         model.addAttribute("users", users);
         return "test";
