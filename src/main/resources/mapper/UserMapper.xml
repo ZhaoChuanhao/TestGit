@@ -2,8 +2,59 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.hd.dao.UserMapper">
-    <select id="getAllUser" resultType="User">
-        SELECT * FROM tb_user
+
+    <resultMap id="UserMap" type="User">
+        <id column="USER_ID" property="userId"></id>
+        <result column="USER_NAME" property="userName"></result>
+        <result column="PASSWORD" property="password"></result>
+        <result column="SEX" property="sex"></result>
+        <result column="AGE" property="age"></result>
+        <result column="PHONE_NUMBER" property="phoneNumber"></result>
+        <result column="CREATION_DATE" property="creationDate"></result>
+        <result column="LAST_UPDATE_DATE" property="lastUpdateDate"></result>
+        <result column="COMMENTS" property="comments"></result>
+    </resultMap>
+
+    <select id="login" parameterType="User" resultMap="UserMap">
+        SELECT * FROM CUX_USERS
+        WHERE USER_NAME = #{userName} and PASSWORD = #{password}
+    </select>
+
+    <insert id="register" parameterType="User">
+        INSERT INTO CUX_USERS(USER_NAME,PASSWORD,SEX,AGE,PHONE_NUMBER,CREATION_DATE,LAST_UPDATE_DATE,COMMENTS)
+        VALUE (
+            #{userName},
+            #{password},
+            #{sex},
+            #{age},
+            #{phoneNumber},
+            #{creationDate},
+            #{lastUpdateDate},
+            #{comments}
+        )
+    </insert>
+
+    <select id="getUserByUserId" parameterType="int" resultMap="UserMap">
+        SELECT * FROM CUX_USERS
+        WHERE USER_ID = #{userId}
+    </select>
+
+    <update id="updateUser" parameterType="User">
+        UPDATE CUX_USERS
+        SET
+        USER_NAME = #{userName},
+        PASSWORD = #{password},
+        SEX = #{sex},
+        AGE = #{age},
+        PHONE_NUMBER = #{phoneNumber},
+        LAST_UPDATE_DATE = #{lastUpdateDate},
+        COMMENTS = #{comments}
+        WHERE USER_ID = #{userId}
+    </update>
+
+    <select id="checkUserName" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM CUX_USERS
+        WHERE USER_NAME = #{userName}
     </select>
 
 </mapper>

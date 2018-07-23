@@ -1,6 +1,9 @@
 package com.hd.pojo;
 
+import com.hd.utils.MyUtil;
+
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by 赵传昊 on 2018/7/21.
@@ -11,8 +14,8 @@ public class TodoItem implements Serializable{
     private String todoItemTitle;  //代办事项标题
     private String todoItemContent;  //待办事项内容
     private String priority;  //优先级：LOW/MEDIUM/HIGH
-    private String creationDate;  //创建时间
-    private String lastUpdateDate;  //更新时间
+    private Date creationDate;  //创建时间
+    private Date lastUpdateDate;  //更新时间
     private String comments;  //备注
 
     public Integer getTodoItemId() {
@@ -55,19 +58,35 @@ public class TodoItem implements Serializable{
         this.priority = priority;
     }
 
-    public String getCreationDate() {
+    public String getCreationTime(){
+        if (creationDate != null){
+            return MyUtil.DateToString(creationDate);
+        }else {
+            return "";
+        }
+    }
+
+    public Date getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(String creationDate) {
+    public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
 
-    public String getLastUpdateDate() {
+    public String getLastUpdateTime(){
+        if (lastUpdateDate != null){
+            return MyUtil.DateToString(lastUpdateDate);
+        }else {
+            return "";
+        }
+    }
+
+    public Date getLastUpdateDate() {
         return lastUpdateDate;
     }
 
-    public void setLastUpdateDate(String lastUpdateDate) {
+    public void setLastUpdateDate(Date lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
     }
 
@@ -77,5 +96,19 @@ public class TodoItem implements Serializable{
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    @Override
+    public String toString() {
+        return "TodoItem{" +
+                "todoItemId=" + todoItemId +
+                ", userId=" + userId +
+                ", todoItemTitle='" + todoItemTitle + '\'' +
+                ", todoItemContent='" + todoItemContent + '\'' +
+                ", priority='" + priority + '\'' +
+                ", creationDate='" + creationDate + '\'' +
+                ", lastUpdateDate='" + lastUpdateDate + '\'' +
+                ", comments='" + comments + '\'' +
+                '}';
     }
 }
