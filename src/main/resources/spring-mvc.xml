@@ -42,6 +42,7 @@
             <!-- /**表示所有url包括子url路径 -->
             <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/user/toLogin"/>
+            <mvc:exclude-mapping path="/user/login"/>
             <bean class="com.hd.utils.MyHandlerInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

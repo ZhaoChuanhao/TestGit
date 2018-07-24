@@ -28,7 +28,9 @@
                     <td>用户名</td>
                     <td>${user.userName}</td>
                     <td>密码</td>
-                    <td>${user.password}</td>
+                    <td>
+                        <input type="password" id="password" value="${user.password}" readonly/>
+                    </td>
                 </tr>
                 <tr>
                     <td>性别</td>

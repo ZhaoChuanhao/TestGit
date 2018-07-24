@@ -28,7 +28,9 @@
             </tr>
             <tr>
                 <td>内容：</td>
-                <td><input type="text" name="todoItemContent" placeholder="请输入内容"/></td>
+                <td>
+                    <textarea name="todoItemContent" placeholder="请输入内容"></textarea>
+                </td>
             </tr>
             <tr>
                 <td>优先级：</td>

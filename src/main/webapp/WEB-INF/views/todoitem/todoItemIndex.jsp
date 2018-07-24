@@ -27,20 +27,25 @@
         <a href="${pageContext.request.contextPath}/user/toLogin" target="_top">退出</a>
     </div>
     <div class="table_box">
-        <table>
-            <tr>
-                <td>序号</td>
-                <td>标题</td>
-                <td>内容</td>
-                <td>优先级</td>
-                <td>创建时间</td>
-                <td>更新时间</td>
+        <table width="1000">
+            <tr id="head_tr">
+                <th width="8%">序号</th>
+                <th width="15%">标题</th>
+                <th width="20%">内容</th>
+                <th width="10%">优先级</th>
+                <th width="20%">创建时间</th>
+                <th width="20%">更新时间</th>
+                <th width="12%">备注</th>
             </tr>
+            <c:set var="i" value="1"></c:set>
             <c:forEach var="todoItem" items="${todoItems}">
                 <tr>
-                    <td id="todoItemId">${todoItem.todoItemId}</td>
+                    <td>
+                        <input type="hidden" id="todoItemId" value="${todoItem.todoItemId}"/>
+                        ${i}
+                    </td>
                     <td>${todoItem.todoItemTitle}</td>
-                    <td>${todoItem.todoItemContent}</td>
+                    <td title="${todoItem.todoItemContent}">${todoItem.todoItemContent}</td>
                     <td>
                         <c:if test="${todoItem.priority == 'LOW'}">低</c:if>
                         <c:if test="${todoItem.priority == 'MEDIUM'}">中</c:if>
@@ -48,7 +53,9 @@
                     </td>
                     <td>${todoItem.creationTime}</td>
                     <td>${todoItem.lastUpdateTime}</td>
+                    <td title="${todoItem.comments}">${todoItem.comments}</td>
                 </tr>
+                <c:set var="i" value="${i + 1}"></c:set>
             </c:forEach>
         </table>
     </div>

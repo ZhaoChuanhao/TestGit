@@ -40,7 +40,6 @@ public class UserController extends BaseController {
 
     @RequestMapping("toLogin")
     public String toLogin(Model model, String message){
-        log.info("跳转到登录页");
         log.info("读取session");
         User user = (User)session.getAttribute("user");
 
@@ -56,14 +55,16 @@ public class UserController extends BaseController {
             }
         }
 
-        log.info("如果session为空,则把cookie值赋给session");
+        //如果session为空,则把cookie值赋给session
         if(user == null){
+            log.info("session为空,把cookie值赋给session");
             user = new User();
             user.setUserName(userName);
             user.setPassword(password);
             session.setAttribute("user", user);
         }else{
-            log.info("否则，把session值赋给cookie");
+            //否则，把session值赋给cookie
+            log.info("session不为空，把session值赋给cookie");
             Cookie cookie1 = new Cookie("userName", URLEncoder.encode(user.getUserName()));
             Cookie cookie2 = new Cookie("password", user.getPassword());
             cookie1.setMaxAge(60 * 60 * 24);
@@ -80,9 +81,11 @@ public class UserController extends BaseController {
     @RequestMapping("login")
     public String login(User user, Model model){
         log.info("用户登录");
-        user.setPassword(user.getPassword().substring(0, 16));
-        user = userService.login(user);
-        if (user != null){
+        if(user != null){
+            if(user.getPassword() != null){
+                user.setPassword(user.getPassword().substring(0, 16));
+            }
+            user = userService.login(user);
             session.setAttribute("user", user);
             Cookie cookie1 = new Cookie("userName", URLEncoder.encode(user.getUserName()));
             Cookie cookie2 = new Cookie("password", user.getPassword());
@@ -136,9 +139,9 @@ public class UserController extends BaseController {
 
     @RequestMapping("checkUser")
     @ResponseBody
-    public void checkUser(String newUserName, User user) throws IOException{
+    public Integer checkUser(String newUserName, User user) throws IOException{
         log.info("检查用户名是否重复以及原密码是否正确");
-        int flag = 0;
+        Integer flag = 0;
         if(userService.checkUserName(newUserName)){
             flag = 1;
         }
@@ -149,10 +152,7 @@ public class UserController extends BaseController {
                 }
             }
         }
-
-        PrintWriter pw = response.getWriter();
-        JSONArray jsonArray = JSONArray.fromObject(flag);
-        pw.print(jsonArray.toString());
+        return flag;
     }
 
 }

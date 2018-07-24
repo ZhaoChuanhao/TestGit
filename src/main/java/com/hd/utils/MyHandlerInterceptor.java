@@ -17,6 +17,7 @@ public class MyHandlerInterceptor implements HandlerInterceptor {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         if (user == null){
+            httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/user/toLogin");
             return false;
         }else {
             return true;
